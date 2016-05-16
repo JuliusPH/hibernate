@@ -1,0 +1,14 @@
+<hibernate-mapping>
+  <class name="com.exist.model.Address" table="Address">
+    <meta attribute="class-description">
+      This class contains the address details.
+    </meta>
+    <id name="id" type="long" column="id">
+      <generator class="identity"/>
+    </id>
+    <property name="streetNumber" column="street_number" type="string"/>
+    <property name="barangay" column="barangay" type="string"/>
+    <property name="city" column="city" type="string"/>
+    <property name="zipCode" column="zip_code" type="string"/>
+  </class>
+</hibernate-mapping>
