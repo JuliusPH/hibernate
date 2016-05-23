@@ -450,7 +450,7 @@ public class Menu{
                         }
                         break;
                     case "L":
-                        if(contactService.update(landlineContact)){
+                        if(contactService.remove(landlineContact)){
                             System.out.println("Successfully deleted landline: " + landlineContact.getValue());
                         }
                         else{
