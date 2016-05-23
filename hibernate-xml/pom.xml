@@ -160,9 +160,12 @@
               </goals>
               <configuration>
                 <autocommit>true</autocommit>
-                <includes>
-                  <include>${project.parent.basedir}/buildtools/sql/*.sql</include>
-                </includes>
+                <fileset>
+                  <basedir>${project.parent.basedir}</basedir>
+                  <includes>
+                    <include>buildtools/sql/*.sql</include>
+                  </includes>
+                </fileset>
               </configuration>
             </execution>
           </executions>
