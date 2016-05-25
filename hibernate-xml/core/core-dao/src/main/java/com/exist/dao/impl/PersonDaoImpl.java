@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 
 public class PersonDaoImpl extends GenericDaoImpl<Person> implements PersonDao{
 
@@ -43,7 +44,7 @@ public class PersonDaoImpl extends GenericDaoImpl<Person> implements PersonDao{
         Transaction transaction = session.beginTransaction();
         List list = null;
         try{
-            list = session.createCriteria(Person.class).list();
+            list = session.createCriteria(Person.class).addOrder(Order.asc("id")).list();
             transaction.commit();
         }
         catch(HibernateException e){
