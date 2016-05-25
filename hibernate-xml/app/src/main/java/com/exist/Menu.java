@@ -154,12 +154,8 @@ public class Menu{
         System.out.println("[ENTER DELETE MODE]\n");
         List<Person> personList = personService.list();
         if(personList.size() > 0){
-            Long id = validator.validateId("\nInput id of person you want to delete: ", "Please input a valid number: ");
-            Person person = personService.get(id);
-            while(person == null){
-                id = validator.validateId("\nInputted id does not exist, please repeat: ", "Please input a valid number: ");
-                person = personService.get(id);
-            }
+            Person person = getValidPerson("\nInput id of person you want to delete: ");  
+            
             if(personService.remove(person)){
                 System.out.println("Successfully deleted: " + person.getFirstName() + " " 
                                                             + person.getMiddleName() + " " 
@@ -180,12 +176,7 @@ public class Menu{
         System.out.println("[ENTER UPDATE MODE]\n");
         List<Person> personList = personService.list();
         if(personList.size() > 0){
-            Long id = validator.validateId("\nInput id of person you want to update: ", "Please input a valid number: ");
-            Person person = personService.get(id);
-            while(person == null){
-                id = validator.validateId("\nInputted id does not exist, please repeat: ", "Please input a valid number: ");
-                person = personService.get(id);
-            }
+            Person person = getValidPerson("\nInput id of person you want to update: ");  
             
             boolean continueUpdate = true;
             
@@ -291,13 +282,7 @@ public class Menu{
         System.out.println("[ENTER UPDATE CONTACT MODE]\n");
         List<Person> personList = personService.list();
         if(personList.size() > 0){
-            Long id = validator.validateId("\nInput id of person you want to update the contact: ", "Please input a valid number: ");
-            Person person = personService.get(id);
-            while(person == null){
-                id = validator.validateId("\nInputted id does not exist, please repeat: ", "Please input a valid number: ");
-                person = personService.get(id);
-            }
-            
+            Person person = getValidPerson("\nInput id of person you want to update the contact: "); 
             
             Contact oldEmailContact = null;
             Contact oldMobileContact = null;
@@ -388,12 +373,7 @@ public class Menu{
         System.out.println("[ENTER DELETE CONTACT MODE]\n");
         List<Person> personList = personService.list();
         if(personList.size() > 0){
-            Long id = validator.validateId("\nInput id of person you want to delete the contact: ", "Please input a valid number: ");
-            Person person = personService.get(id);
-            while(person == null){
-                id = validator.validateId("\nInputted id does not exist, please repeat: ", "Please input a valid number: ");
-                person = personService.get(id);
-            }
+            Person person = getValidPerson("\nInput id of person you want to delete the contact: "); 
             
             Contact oldEmailContact = null;
             Contact oldMobileContact = null;
@@ -935,6 +915,7 @@ public class Menu{
         genderList.add(0, " GENDER ");
         
         System.out.println();
+        int columnCount = 8;
         int tableLength = getMaxLength(idList) +
                           getMaxLength(nameList) +
                           getMaxLength(addressList) +
@@ -942,26 +923,47 @@ public class Menu{
                           getMaxLength(gwaList) +
                           getMaxLength(employmentList) +
                           getMaxLength(contactList) +
-                          getMaxLength(genderList) + 9;
+                          getMaxLength(genderList) + 
+                          columnCount + 1;
         
         System.out.println(format("", tableLength, '-'));
+        String noRecord = "(No record to display)";
         for(int i = 0; i < idList.size(); i++){
-            System.out.print("|" + format(idList.get(i), getMaxLength(idList)) + "|");
-            System.out.print(format(nameList.get(i), getMaxLength(nameList)) + "|");
-            System.out.print(format(addressList.get(i), getMaxLength(addressList)) + "|");
-            System.out.print(format(birthdayList.get(i), getMaxLength(birthdayList)) + "|");
-            System.out.print(format(gwaList.get(i), getMaxLength(gwaList)) + "|");
-            System.out.print(format(employmentList.get(i), getMaxLength(employmentList)) + "|");
-            System.out.print(format(contactList.get(i), getMaxLength(contactList)) + "|");
-            System.out.println(format(genderList.get(i), getMaxLength(genderList)) + "|");
+            System.out.print("|" + format(idList.get(i), getMaxLength(idList), false) + "|");
+            System.out.print(format(nameList.get(i), getMaxLength(nameList), false) + "|");
+            System.out.print(format(addressList.get(i), getMaxLength(addressList), false) + "|");
+            System.out.print(format(birthdayList.get(i), getMaxLength(birthdayList), false) + "|");
+            System.out.print(format(gwaList.get(i), getMaxLength(gwaList), false) + "|");
+            System.out.print(format(employmentList.get(i), getMaxLength(employmentList), false) + "|");
+            System.out.print(format(contactList.get(i), getMaxLength(contactList), false) + "|");
+            System.out.println(format(genderList.get(i), getMaxLength(genderList), false) + "|");
             System.out.println(format("", tableLength, '-'));
+        }
+        if(list.size() == 0){
+            System.out.println(format(noRecord, (tableLength + noRecord.length())/2, true) );
         }
         System.out.println();
     }
     
-    private String format(String input, int length){
+    private Person getValidPerson(String description){
+        Long id = validator.validateId(description, "Please input a valid number: ");
+        Person person = personService.get(id);
+        while(person == null){
+            id = validator.validateId("\nInputted id does not exist, please repeat: ", "Please input a valid number: ");
+            person = personService.get(id);
+        }
+        return person;
+    }
+    
+    
+    private String format(String input, int length, boolean isPrefix){
         while(input.length() < length){
-            input += " ";
+            if(isPrefix){
+                input = " " + input;
+            }
+            else{
+                input += " ";
+            }
         }
         return input;
     }
