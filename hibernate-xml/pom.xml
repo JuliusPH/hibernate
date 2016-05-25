@@ -128,6 +128,19 @@
           </configuration>
           <executions>
             <execution>
+              <id>delete-connections</id>
+              <phase>process-resources</phase>
+              <goals>
+                <goal>execute</goal>
+              </goals>
+              <configuration>
+                <url>jdbc:postgresql://localhost/postgres</url>
+                <autocommit>true</autocommit>
+                <sqlCommand>SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname='persondb' AND pid != pg_backend_pid()</sqlCommand>
+                <onError>continue</onError>
+              </configuration>
+            </execution>
+            <execution>
               <id>drop-db</id>
               <phase>process-resources</phase>
               <goals>
@@ -160,6 +173,7 @@
               </goals>
               <configuration>
                 <autocommit>true</autocommit>
+                <orderFile>ascending</orderFile>
                 <fileset>
                   <basedir>${project.parent.basedir}</basedir>
                   <includes>
