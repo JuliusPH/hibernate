@@ -2,20 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>core</artifactId>
+  <artifactId>core-dto</artifactId>
+  <groupId>com.exist.dto</groupId>
 
   <parent>
     <groupId>com.exist</groupId>
-    <artifactId>hibernate-xml</artifactId>
+    <artifactId>core</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-
-  <modules>
-    <module>core-model</module>
-    <module>core-dao</module>
-    <module>core-service</module>
-    <module>core-dto</module>
-  </modules>
-
-  <packaging>pom</packaging>
 </project>
