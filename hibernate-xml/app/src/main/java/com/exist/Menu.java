@@ -191,26 +191,34 @@ public class Menu{
                     count++;
                 }
                 System.out.println("\nWhat information do you want to update?\n"  + 
-                    "\n1 - NAME\n    " +
-                    "[" + person.getFirstName() + " " + 
-                          person.getMiddleName() + " " + 
-                          person.getLastName() + "]\n" +
-                    "\n2 - ADDRESS\n    " + 
-                    "[" + person.getAddress().getStreetNumber() + " " + 
-                          person.getAddress().getBarangay() + " " + 
-                          person.getAddress().getCity() + " " + 
-                          person.getAddress().getZipCode() + "]\n" +
-                    "\n3 - BIRTHDAY\n    " + 
-                    "[" + new SimpleDateFormat("yyyy-MM-dd").format(person.getBirthday()) + "]\n" +
-                    "\n4 - GWA\n    " + 
-                    "[" + person.getGwa() + "]\n" +
-                    "\n5 - EMPLOYMENT\n    " + 
-                    "[" + (person.isEmployed() ? "Employed " + new SimpleDateFormat("yyyy-MM-dd").format(person.getDateHired()): "Not employed") + 
-                           "]\n" +
-                    "\n6 - CONTACTS\n    " + "[" +
+                    "\n1 - NAME\n    [" + 
+                        person.getFirstName() + " " + 
+                        person.getMiddleName() + " " + 
+                        person.getLastName() + "]\n" +
+                          
+                    "\n2 - ADDRESS\n    [" + 
+                        person.getAddress().getStreetNumber() + " " + 
+                        person.getAddress().getBarangay() + " " + 
+                        person.getAddress().getCity() + " " + 
+                        person.getAddress().getZipCode() + "]\n" +
+                          
+                    "\n3 - BIRTHDAY\n    [" + 
+                        new SimpleDateFormat("yyyy-MM-dd").format(person.getBirthday()) + "]\n" +
+                    
+                    "\n4 - GWA\n    [" + 
+                        person.getGwa() + "]\n" +
+                    
+                    "\n5 - EMPLOYMENT\n    [" + 
+                        (person.isEmployed() ? 
+                            "Employed " + new SimpleDateFormat("yyyy-MM-dd").format(person.getDateHired()) : 
+                            "Not employed") + "]\n" +
+                    
+                    "\n6 - CONTACTS\n    [" +
                           contacts + "]\n" +
-                    "\n7 - GENDER\n    " + 
-                    "[" + person.getGender() + "]\n" +
+                          
+                    "\n7 - GENDER\n    [" + 
+                        person.getGender() + "]\n" +
+                    
                     "\n8 - CANCEL\n");
                     
                 int option = validator.validateNumber(1, 8, "Input a number from 1 to 8: ", "Please input a number from 1 to 8 only: ");
@@ -317,43 +325,23 @@ public class Menu{
                 description += "\nC - Cancel\n";
                 String option = validator.validateText(choices, description + "\nInput: ", description + "\nPlease input only from the choices above: ");
                 option = option.toUpperCase();
-                
-                Contact emailContact = oldEmailContact;
-                Contact mobileContact = oldMobileContact;
-                Contact landlineContact = oldLandlineContact;
                 switch(option){
+                
                     case "E":
-                        String email = validator.validateEmail("Input email (Old: " + oldEmailContact.getValue() + "): ", "Please input a valid email: ");
-                        emailContact.setValue(email);
-                        if(contactService.update(emailContact)){
-                            System.out.println("Successfully updated email: " + oldEmailContact.getValue() + "->" + emailContact.getValue());
-                        }
-                        else{
-                            System.out.println("Failed updating, please try again");
-                        }
+                        updateContact(oldEmailContact);
                         break;
+                        
                     case "M":
-                        String mobile = validator.validateMobileNumber("Input mobile (Old: " + oldMobileContact.getValue() + "): ", "Please input a valid mobile: ");
-                        mobileContact.setValue(mobile);
-                        if(contactService.update(mobileContact)){
-                            System.out.println("Successfully updated mobile: " + oldMobileContact.getValue() + "->" + mobileContact.getValue());
-                        }
-                        else{
-                            System.out.println("Failed updating, please try again");
-                        }
+                        updateContact(oldMobileContact);
                         break;
+                        
                     case "L":
-                        String landline = validator.validateLandlineNumber("Input landline (Old: " +  oldLandlineContact.getValue() + "): ", "Please input a valid landline: ");
-                        landlineContact.setValue(landline);
-                        if(contactService.update(landlineContact)){
-                            System.out.println("Successfully updated landline: " + oldLandlineContact.getValue() + "->" + landlineContact.getValue());
-                        }
-                        else{
-                            System.out.println("Failed updating, please try again");
-                        }
+                        updateContact(oldLandlineContact);
                         break;
+                        
                     case "C":
                         break;
+                        
                     default:
                         break;
                 }
@@ -406,36 +394,19 @@ public class Menu{
                 description += oldMobileContact == null ? "" : "\nM - Delete Mobile [" + oldMobileContact.getValue() + "]";
                 description += oldLandlineContact == null ? "" : "\nL - Delete Landline [" + oldLandlineContact.getValue() + "]";
                 description += "\nC - Cancel\n";
-                String option = validator.validateText(choices, description + "\nInput: ", description + "\nPlease input only from the choices above: ");
+                String option = validator.validateText(choices, 
+                                          description + "\nInput: ", 
+                                          description + "\nPlease input only from the choices above: ");
                 option = option.toUpperCase();
-                
-                Contact emailContact = oldEmailContact;
-                Contact mobileContact = oldMobileContact;
-                Contact landlineContact = oldLandlineContact;
                 switch(option){
                     case "E":
-                        if(contactService.remove(emailContact)){
-                            System.out.println("Successfully deleted email: " + emailContact.getValue());
-                        }
-                        else{
-                            System.out.println("Failed deleting, please try again");
-                        }
+                        deleteContact(oldEmailContact);
                         break;
                     case "M":
-                        if(contactService.remove(mobileContact)){
-                            System.out.println("Successfully deleted mobile: " + mobileContact.getValue());
-                        }
-                        else{
-                            System.out.println("Failed deleting, please try again");
-                        }
+                        deleteContact(oldMobileContact);
                         break;
                     case "L":
-                        if(contactService.remove(landlineContact)){
-                            System.out.println("Successfully deleted landline: " + landlineContact.getValue());
-                        }
-                        else{
-                            System.out.println("Failed deleting, please try again");
-                        }
+                        deleteContact(oldLandlineContact);
                         break;
                     case "C":
                         break;
@@ -669,8 +640,8 @@ public class Menu{
             mobileCheck = validator.validateText(yesNoDelete, "Input Y if you want to edit mobile, N if no, and D if you want to delete: ",
                                                               "Please input Y, N, or D only: ");
             if(mobileCheck.equalsIgnoreCase("Y")){
-                String email = validator.validateMobileNumber("Input mobile (Old: " + oldMobileContact + "): ", "Please input a valid mobile number: ");
-                mobileContact.setValue(email);
+                String mobile = validator.validateMobileNumber("Input mobile (Old: " + oldMobileContact + "): ", "Please input a valid mobile number: ");
+                mobileContact.setValue(mobile);
             }
             else if(mobileCheck.equalsIgnoreCase("D")){
                 mobileContact = null;
@@ -955,6 +926,44 @@ public class Menu{
         return person;
     }
     
+    private void updateContact(Contact oldContact){
+        String contactValue = "";
+        Contact contactToUpdate = oldContact;
+        if(oldContact.getContactType() == ContactType.Email){
+            contactValue = validator.validateEmail(
+                                "Input email (Old: " + oldContact.getValue() + "): ", 
+                                "Please input a valid email: ");
+        }
+        else if(oldContact.getContactType() == ContactType.Mobile){
+            contactValue = validator.validateMobileNumber(
+                                "Input mobile (Old: " + oldContact.getValue() + "): ", 
+                                "Please input a valid mobile: ");
+        }
+        else{
+            contactValue = validator.validateLandlineNumber(
+                                "Input landline (Old: " +  oldContact.getValue() + "): ", 
+                                "Please input a valid landline: ");
+        }
+        
+        contactToUpdate.setValue(contactValue);
+        if(contactService.update(contactToUpdate)){
+            System.out.println("Successfully updated contact: " + 
+                           oldContact.getValue() + "->" + 
+                           contactToUpdate.getValue());
+        }
+        else{
+            System.out.println("Failed updating, please try again");
+        }
+    }
+    
+    private void deleteContact(Contact oldContact){
+        if(contactService.remove(oldContact)){
+            System.out.println("Successfully deleted contact: " + oldContact.getValue());
+        }
+        else{
+            System.out.println("Failed deleting, please try again");
+        }
+    }
     
     private String format(String input, int length, boolean isPrefix){
         while(input.length() < length){
