@@ -19,7 +19,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>sql-maven-plugin</artifactId>
-              <executions>
+            <executions>
               <execution>
                 <id>delete-connections</id>
                 <phase>process-resources</phase>
@@ -64,18 +64,18 @@
                 </configuration>
               </execution>
             </executions>
-            </plugin>
-          </plugins>
-        </build>
-      </profile>
-      <profile>
-        <id>createschema</id>
-        <build>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>sql-maven-plugin</artifactId>
-              <executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>createschema</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sql-maven-plugin</artifactId>
+            <executions>
               <execution>
                 <id>create-schema</id>
                 <phase>process-resources</phase>
@@ -88,7 +88,37 @@
                   <fileset>
                     <basedir>${project.parent.basedir}</basedir>
                     <includes>
-                      <include>buildtools/sql/*.sql</include>
+                      <include>buildtools/sql/schema/*.sql</include>
+                    </includes>
+                  </fileset>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>insertdata</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sql-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>insert-data</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>execute</goal>
+                </goals>
+                <configuration>
+                  <autocommit>true</autocommit>
+                  <orderFile>ascending</orderFile>
+                  <fileset>
+                    <basedir>${project.parent.basedir}</basedir>
+                    <includes>
+                      <include>buildtools/sql/data/*.sql</include>
                     </includes>
                   </fileset>
                 </configuration>
