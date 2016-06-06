@@ -31,9 +31,8 @@ public class Address extends BaseEntity{
         this.zipCode = zipCode;
     }
     
-    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToOne
     @PrimaryKeyJoinColumn
-    @Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
     public Person getPerson(){
         return person;
     }

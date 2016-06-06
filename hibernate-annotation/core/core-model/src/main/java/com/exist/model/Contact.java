@@ -51,9 +51,8 @@ public class Contact extends BaseEntity{
         this.value = value;
     }
     
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "person_id")
-    @Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
     public Person getPerson(){
         return person;
     }
