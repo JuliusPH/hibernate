@@ -12,8 +12,7 @@
         <persistence strategy="localTempSwap" />
     </defaultCache>
  
-    <cache name="person" maxEntriesLocalHeap="10000" eternal="false"
-        timeToIdleSeconds="120" timeToLiveSeconds="120">
+    <cache name="role" maxEntriesLocalHeap="10000" eternal="true">
         <persistence strategy="localTempSwap" />
     </cache>
  

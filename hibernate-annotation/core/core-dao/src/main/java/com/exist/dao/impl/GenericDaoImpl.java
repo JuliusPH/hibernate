@@ -38,21 +38,18 @@ public abstract class GenericDaoImpl<E, K extends Serializable> implements Gener
     
     @Override
     public boolean add(E entity){
-        clearCache();
         Session session = getSession();
         return invoker.execute(new AddDaoCommand<E>(session, entity), session);
     }
     
     @Override
     public boolean update(E entity){
-        clearCache();
         Session session = getSession();
         return invoker.execute(new UpdateDaoCommand<E>(session, entity), session);
     }
     
     @Override
     public boolean delete(E entity){
-        clearCache();
         Session session = getSession();
         return invoker.execute(new DeleteDaoCommand<E>(session, entity), session);
     }
@@ -73,23 +70,13 @@ public abstract class GenericDaoImpl<E, K extends Serializable> implements Gener
     
     @Override
     public boolean deleteAll(Collection<E> entities){
-        clearCache();
         Session session = getSession();
         return invoker.execute(new DeleteAllDaoCommand<E>(session, entities), session);
     }
     
     @Override
     public boolean updateAll(Collection<E> entities){
-        clearCache();
         Session session = getSession();
         return invoker.execute(new UpdateAllDaoCommand<E>(session, entities), session);
-    }
-    
-    @Override
-    public void clearCache(){
-        sessionFactory.getCache().evictEntityRegions();
-        sessionFactory.getCache().evictCollectionRegions();
-        sessionFactory.getCache().evictDefaultQueryRegion();
-        sessionFactory.getCache().evictQueryRegions() ;
     }
 }

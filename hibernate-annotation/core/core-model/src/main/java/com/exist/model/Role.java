@@ -17,7 +17,7 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @Table(name = "Role")
 @Immutable
-@Cache(usage=CacheConcurrencyStrategy.READ_ONLY, region="person")
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY, region="role")
 public class Role extends BaseEntity{
     private String value;
     private Set<Person> persons;

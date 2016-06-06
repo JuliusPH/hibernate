@@ -47,7 +47,6 @@ public class PersonDaoImpl extends GenericDaoImpl<Person, Long> implements Perso
                 }
                 break;
         }
-        List<Person> list = criteria.setCacheable(true).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-        return list;
+        return criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
     }
 }

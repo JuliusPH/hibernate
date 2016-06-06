@@ -18,14 +18,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "Person")
-@Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="person")
 public class Person extends BaseEntity{
     private Name name;
     private Address address;
@@ -47,7 +42,6 @@ public class Person extends BaseEntity{
     }
     
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="person")
     public Address getAddress(){
         return address;
     }
@@ -93,7 +87,6 @@ public class Person extends BaseEntity{
     }
     
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     public Set<Contact> getContacts(){
         return contacts;
     }
@@ -114,7 +107,6 @@ public class Person extends BaseEntity{
     
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="PersonRole", joinColumns=@JoinColumn(name="person_id"), inverseJoinColumns=@JoinColumn(name="role_id"))
-    @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
     public Set<Role> getRoles(){
         return roles;
     }

@@ -17,6 +17,4 @@ public interface GenericDao<E, K>{
     boolean deleteAll(Collection<E> entities);
     
     boolean updateAll(Collection<E> entities);
-    
-    void clearCache();
 }

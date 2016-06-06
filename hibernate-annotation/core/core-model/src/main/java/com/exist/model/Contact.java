@@ -12,14 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "Contact")
-@Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="person")
 public class Contact extends BaseEntity{
     private ContactType contactType;
     private String value;

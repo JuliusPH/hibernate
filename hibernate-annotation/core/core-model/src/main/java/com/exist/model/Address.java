@@ -7,14 +7,9 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "Address")
-@Cache(usage=CacheConcurrencyStrategy.READ_WRITE, region="person")
 public class Address extends BaseEntity{
     private Person person;
     private String streetNumber;
