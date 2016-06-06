@@ -10,8 +10,43 @@
     <artifactId>infra</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <resources>
+            <resource>
+              <directory>src/main/resources</directory>
+              <filtering>true</filtering>
+            </resource>
+          </resources>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
   <profiles>
+    <profile>
+      <id>development</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <hibernate.connection.driver_class>org.postgresql.Driver</hibernate.connection.driver_class>
+        <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
+        <hibernate.connection.url>jdbc:postgresql://localhost/persondb</hibernate.connection.url>
+        <hibernate.connection.username>postgres</hibernate.connection.username>
+        <hibernate.connection.password>121212</hibernate.connection.password>
+        <hibernate.show_sql>true</hibernate.show_sql>
+        <hibernate.cache.region.factory_class>org.hibernate.cache.ehcache.EhCacheRegionFactory</hibernate.cache.region.factory_class>
+        <hibernate.cache.provider_class>org.hibernate.cache.EhCacheProvider</hibernate.cache.provider_class>
+        <hibernate.cache.use_second_level_cache>true</hibernate.cache.use_second_level_cache>
+        <hibernate.cache.use_query_cache>true</hibernate.cache.use_query_cache>
+      </properties>
+    </profile>
     <profile>
       <id>createdb</id>
       <build>
